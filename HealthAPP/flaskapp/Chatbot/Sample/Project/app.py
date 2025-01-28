@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)  # Generates a random secret key
 
 # Configure your API key here
-genai.configure(api_key="AIzaSyCV7pLU5IN8btkJ72BjLxK547cMc1lJOGY")
+genai.configure(api_key="API")
 
 generation_config = {
     "temperature": 1,
