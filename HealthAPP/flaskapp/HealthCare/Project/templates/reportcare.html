@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReportCare+</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        #file-preview {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ReportCare+</h1>
+        <div class="form-group">
+            <label for="report-upload">Select a report to analyze (JPG or PNG only):</label>
+            <button onclick="document.getElementById('report-upload').click()">Select Report</button>
+            <input type="file" id="report-upload" accept=".jpg,.jpeg,.png" onchange="previewFile(event)">
+        </div>
+
+        <div class="form-group">
+            <button id="analyze-btn" onclick="submitReport()">Analyze Report</button>
+        </div>
+
+        <!-- Report preview -->
+        <div id="file-preview-container">
+            <p id="file-preview"></p>
+        </div>
+    </div>
+
+    <script>
+        let selectedReport = null;
+
+        // Preview the selected file (show file name)
+        function previewFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('file-preview').textContent = `Selected file: ${file.name}`;
+                selectedReport = file;
+            }
+        }
+
+        // Function to handle "Analyze Report" button click
+        function submitReport() {
+            if (!selectedReport) {
+                alert("Please select a report first!");
+                return;
+            }
+
+            // Create FormData object to send the report to Flask backend
+            let formData = new FormData();
+            formData.append("image", selectedReport);
+
+            // Send the report to the Flask backend for processing
+            fetch('/scan_report', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())  // Expecting plain text (response from the model)
+            .then(data => {
+                // Display the response text in result.html
+                window.location.href = '/result';  // Redirect to result page
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error processing the report");
+            });
+        }
+    </script>
+</body>
+</html>

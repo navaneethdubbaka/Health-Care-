@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DietPro+ - Personalized Nutrition Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Personalized Nutrition Plan</h1>
+        <form action="/submit" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="medical_condition">Medical Conditions:</label>
+            <textarea id="medical_condition" name="medical_condition" placeholder="E.g., Type 2 Diabetes, Hypertension" rows="4"></textarea>
+
+            <label for="food_preference">Food Preferences:</label>
+            <select id="food_preference" name="food_preference" required>
+                <option value="">Select</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Non-Vegetarian">Non-Vegetarian</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Pescatarian">Pescatarian</option>
+                <option value="Mixed">Mixed</option>
+            </select>
+
+            <label for="food_allergies">Food Allergies:</label>
+            <textarea id="food_allergies" name="food_allergies" placeholder="E.g., Peanuts, Dairy, Gluten" rows="4"></textarea>
+
+            <label for="preferred_language">Preferred Language:</label>
+            <select id="preferred_language" name="preferred_language" required>
+                <option value="">Select</option>
+                <option value="English">English</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Hindi">Hindi</option>
+                <option value="French">French</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <button type="submit">Generate Plan</button>
+        </form>
+    </div>
+</body>
+</html>

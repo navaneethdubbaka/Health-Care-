@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Nutrition App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Nutrition App</h1>
+        <div class="features">
+            <button onclick="window.location.href='/dietpro'">DietPro+</button>
+            <button onclick="window.location.href='/nutriscan'">NutriScan+</button>
+            <button onclick="window.location.href='/reportcare'">ReportCare+</button>
+            <button onclick="window.location.href='/quickdiagnose'">QuickDiagnose+</button>
+            <button onclick="window.location.href='/medipal'">MediPal+</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2C3E50;
+        }
+
+        div {
+            width: 60%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        h2 {
+            margin-top: 30px;
+            text-align: center;
+            color: #2C3E50;
+        }
+
+        #response-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+        }
+
+        #response {
+            font-size: 16px;
+            color: #2C3E50;
+            text-align: left;
+        }
+    </style>
+    <script>
+        async function sendQuery() {
+            const query = document.getElementById("query").value;
+            const language = document.getElementById("language").value || "English";
+            const context = document.getElementById("context").value;
+
+            const data = {
+                query: query,
+                language: language,
+                context: context
+            };
+
+            try {
+                const response = await fetch('/medipal', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById("response").textContent = result.response;
+                } else {
+                    document.getElementById("response").textContent = `Error: ${result.error}`;
+                }
+
+                // Show the response container
+                document.getElementById("response-container").style.display = 'block';
+            } catch (error) {
+                document.getElementById("response").textContent = `Error: ${error.message}`;
+                document.getElementById("response-container").style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>MediPal Health Assistant</h1>
+    <div>
+        <label for="query">Query:</label><br>
+        <textarea id="query" rows="4" cols="50" placeholder="Type your health-related question here"></textarea><br><br>
+
+        <label for="language">Preferred Language:</label><br>
+        <input type="text" id="language" placeholder="e.g., English, Spanish"><br><br>
+
+        <label for="context">Additional Context (optional):</label><br>
+        <textarea id="context" rows="4" cols="50" placeholder="Provide any additional context if needed"></textarea><br><br>
+
+        <button onclick="sendQuery()">Send</button>
+    </div>
+
+    <h2>Response:</h2>
+    <div id="response-container">
+        <p id="response">Waiting for your query...</p>
+    </div>
+</body>
+</html>
